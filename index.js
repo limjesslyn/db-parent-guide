@@ -15,9 +15,23 @@ app.use(express.json());
 
 app.use(cors())
 
-
+const welcome_msg = 
+`<div>
+  <div class='header'>
+    <h1>Hello Articles</h1>
+    <p>This database mainly created for upcoming parent-guide website</p>
+  </div>
+  <div class='content'>
+    <ul>
+      <li>To Fetch Article</li>
+        <p>Use <strong>/article</strong></p>
+      <li>To Fetch Detail [Temporary]</li>
+        <p>Use <strong>/article/test/detail/:id</strong></p>
+    </ul>
+  </div>
+</div>`
 app.get('/', (req, res) => {
-  res.send('Hello article');
+  res.send(welcome_msg);
 });
 
 app.get('/article', (req, res) => {

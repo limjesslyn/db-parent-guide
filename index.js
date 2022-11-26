@@ -24,24 +24,14 @@ const welcome_msg =
   <div class='content'>
     <ul>
       <li>To Fetch Article</li>
-        <p>Use <strong>/article</strong></p>
-      <li>To Fetch Detail [Temporary]</li>
-        <p>Use <strong>/article/test/detail/:id</strong></p>
+        <p>Use <strong>/articles</strong></p>
+      <li>To Fetch Detail</li>
+        <p>Use <strong>/article/detail/:id</strong></p>
     </ul>
   </div>
 </div>`
 app.get('/', (req, res) => {
   res.send(welcome_msg);
-});
-
-app.get('/article', (req, res) => {
-  db.all('SELECT * FROM article', (err, data) => {
-    if (err) {
-      res.send(err.message);
-      return;
-    }
-    res.send(data);
-  });
 });
 
 app.post('/article', (req, res) => {
@@ -75,8 +65,41 @@ app.delete('/article/:id', (req, res) => {
     })
 })
 
-// example for detail
-app.get('/article/test/detail/:id', (req, res) => {
+// fetch all articles
+app.get('/articles', (req, res) => {
+  db.all('SELECT * FROM article', (err, data) => {
+    if (err) {
+      res.send(err.message);
+      return;
+    }
+    res.send(data);
+  });
+});
+
+// fetch popular articles
+app.get('/articles/popular', (req, res) => {
+  db.all('SELECT * FROM article where article_rating = 5', (err, data) => {
+    if (err) {
+      res.send(err.message);
+      return;
+    }
+    res.send(data);
+  });
+});
+
+// fetch recommendation articles
+app.get('/articles/recommendation', (req, res) => {
+  db.all('SELECT * FROM article where article_rating = 4', (err, data) => {
+    if (err) {
+      res.send(err.message);
+      return;
+    }
+    res.send(data);
+  });
+});
+
+// fetch detail article
+app.get('/article/detail/:id', (req, res) => {
   db.all('SELECT * FROM article WHERE article_id=?', [req.params.id], (err, data) => {
     if (err) {
       res.send(err.message);

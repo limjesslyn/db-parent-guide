@@ -78,7 +78,7 @@ app.get('/articles', (req, res) => {
 
 // fetch popular articles
 app.get('/articles/popular', (req, res) => {
-  db.all('SELECT * FROM article where article_rating = 5', (err, data) => {
+  db.all('SELECT * FROM article where article_rating = 5 LIMIT 0,3', (err, data) => {
     if (err) {
       res.send(err.message);
       return;
@@ -100,7 +100,7 @@ app.get('/articles/recommendation', (req, res) => {
 
 // fetch detail article
 app.get('/article/detail/:id', (req, res) => {
-  db.all('SELECT * FROM article WHERE article_id=?', [req.params.id], (err, data) => {
+  db.get('SELECT * FROM article WHERE article_id=?', [req.params.id], (err, data) => {
     if (err) {
       res.send(err.message);
       return;
@@ -108,6 +108,17 @@ app.get('/article/detail/:id', (req, res) => {
     res.send(data);
   });
 });
+
+// update article data
+app.patch('/article/update/:id', (req, res) => {
+  db.run('UPDATE article SET article_rating=? WHERE article_id=?', [req.body.article_rating, req.params.id], (err, data) => {
+    if(err) {
+      res.send(err.message);
+      return;
+    }
+    res.send(data);
+  })
+})
 
 app.listen(PORT, () => {
   console.log('server started at:', PORT);

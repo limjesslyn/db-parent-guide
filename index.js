@@ -78,7 +78,7 @@ app.get('/articles', (req, res) => {
 
 // fetch popular articles
 app.get('/articles/popular', (req, res) => {
-  db.all('SELECT * FROM article where article_rating = 5 LIMIT 0,3', (err, data) => {
+  db.all('SELECT * FROM article where article_rating = 5 LIMIT 3', (err, data) => {
     if (err) {
       res.send(err.message);
       return;
@@ -89,7 +89,7 @@ app.get('/articles/popular', (req, res) => {
 
 // fetch recommendation articles
 app.get('/articles/recommendation', (req, res) => {
-  db.all('SELECT * FROM article where article_rating = 4', (err, data) => {
+  db.all('SELECT * FROM article where article_rating = 4 LIMIT 6', (err, data) => {
     if (err) {
       res.send(err.message);
       return;

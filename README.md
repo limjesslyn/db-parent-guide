@@ -1,2 +1,2 @@
 # db-parent-guide
-Database for parent-guide article
+Database for [Parent Guide](https://parent-guide.netlify.app/)
